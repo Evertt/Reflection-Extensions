@@ -3,12 +3,11 @@ extension Property {
         case uninitialized(PropertyType.AnyPropertyType)
         case initialized(NormalProperty)
         
-        init(_ property: Any) {
-            if let property = unwrap(property) {
+        init(_ property: OptionalType) {
+            if let property = property.asOptional {
                 self = .initialized(.init(property))
             } else {
-                let optional = property as! OptionalType
-                self = .uninitialized(.init(optional.wrappedType))
+                self = .uninitialized(.init(property.wrappedType))
             }
         }
     }
@@ -16,9 +15,10 @@ extension Property {
 
 extension Property.LazyProperty {
     public var isInitialized: Bool {
-        if case .initialized = self {
+        switch self {
+        case .initialized:
             return true
-        } else {
+        case .uninitialized:
             return false
         }
     }
@@ -38,6 +38,15 @@ extension Property.LazyProperty {
             return normal.value
         case .uninitialized:
             return nil
+        }
+    }
+    
+    public var type: Any.Type {
+        switch self {
+        case let .initialized(normal):
+            return normal.type
+        case let .uninitialized(type):
+            return type.type
         }
     }
 }

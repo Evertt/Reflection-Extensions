@@ -1,15 +1,5 @@
 import Foundation
 
-func unwrap(_ any: Any) -> Any? {
-    let m = Mirror(reflecting: any)
-    
-    if m.displayStyle != .optional {
-        return any
-    }
-    
-    return m.children.first?.value
-}
-
 extension Dictionary {
     init(_ array: [Element]) {
         var d: [Key:Value] = [:]
@@ -21,11 +11,16 @@ extension Dictionary {
 }
 
 protocol OptionalType {
+    var asOptional: Any? { get }
     var wrappedType: Any.Type { get }
     static var wrappedType: Any.Type { get }
 }
 
 extension Optional: OptionalType {
+    var asOptional: Any? {
+        return self
+    }
+    
     var wrappedType: Any.Type {
         return Wrapped.self
     }

@@ -3,9 +3,9 @@ public enum Property {
     case lazy(LazyProperty)
     
     init(key: String, value: Any) {
-        if key.matches(regex: "^.+\\.storage$")
-        && value is OptionalType {
-            self = .lazy(.init(value))
+        if key.matches(regex: "^.+\\.storage$"),
+        let lazyValue = value as? OptionalType {
+            self = .lazy(.init(lazyValue))
         } else {
             self = .normal(.init(value))
         }
@@ -46,6 +46,15 @@ extension Property {
             return normal.value
         case let .lazy(lazy):
             return lazy.value
+        }
+    }
+    
+    public var type: Any.Type {
+        switch self {
+        case let .normal(normal):
+            return normal.type
+        case let .lazy(lazy):
+            return lazy.type
         }
     }
 }

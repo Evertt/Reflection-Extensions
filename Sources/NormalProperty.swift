@@ -4,8 +4,8 @@ extension Property {
         case optional(Any?)
         
         init(_ property: Any) {
-            if property is OptionalType {
-                self = .optional(unwrap(property))
+            if let property = property as? OptionalType {
+                self = .optional(property.asOptional)
             } else {
                 self = .required(property)
             }
@@ -29,6 +29,15 @@ extension Property.NormalProperty {
             return value
         case let .required(value):
             return value
+        }
+    }
+    
+    public var type: Any.Type {
+        switch self {
+        case let .optional(value):
+            return value.wrappedType
+        case let .required(value):
+            return type(of: value)
         }
     }
 }

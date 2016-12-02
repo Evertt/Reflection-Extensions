@@ -1,5 +1,22 @@
 # Reflection-Extensions
 
+## Install
+
+Add this package to your `Package.swift`:
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "MyPackage",
+    dependencies: [
+        .Package(url: "https://github.com/Evertt/Reflection-Extensions.git", majorVersion: 0),
+    ]
+)
+```
+
+## Features
+
 This is an extension to [Zewo's Reflection package](https://github.com/Zewo/Reflection)
 and I hope to delete this repository if brad is willing to incorporate these features in his repo.
 
