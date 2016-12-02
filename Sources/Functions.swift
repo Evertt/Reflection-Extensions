@@ -29,11 +29,9 @@ public func properties(_ type: Any.Type) -> [String:PropertyType] {
 }
 
 public func get(_ key: String, from instance: Any) -> Property? {
-    let props: [String:Property] = properties(instance)
-    
-    for (label, prop) in props where label == key {
-        return prop
-    }
-    
-    return nil
+    return properties(instance)[key]
+}
+
+public func get(_ key: String, from type: Any.Type) -> PropertyType? {
+    return properties(type)[key]
 }
