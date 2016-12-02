@@ -11,7 +11,7 @@ If you would want to know more about the property, like for example if it's an o
 So that's what this package does for you. So here are a few things you can do with this package:
 
 ```swift
-import Reflection_Extensions
+import ReflectionExtensions
 
 struct Foo {
     let required: Int  = 1
