@@ -2,4 +2,5 @@
 .build
 Packages
 MyPlayground.playground
-Reflection+Extensions.xcodeproj
+Reflection*Extensions.xcodeproj
+Package.pins
