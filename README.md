@@ -58,35 +58,4 @@ for (key, property) in fooProps where !property.isOptional {
     print(key, property.value)
     // that prints the key of `required` and `lazyRequired` and their values or nil
 }
-
-// finally, you can also access the properties as an enum, because that's what they actually are.
-
-for (key, property) in fooProps {
-    switch property {
-    case let .normal(normal):
-        switch normal {
-        case let .required(value):
-            print(value)
-        case let .optional(optionalValue):
-            print(optionalValue)
-        }
-    case let .lazy(lazy):
-        switch lazy {
-        case let .initialized(normal):
-            switch normal {
-            case let .required(value):
-                print(value)
-            case let .optional(optionalValue):
-                print(optionalValue)
-            }
-        case let .uninitialized(propertyType):
-            switch propertyType {
-            case let .required(type):
-                print("required:", type)
-            case let .optional(type):
-                print("optional:", type)
-            }
-        }
-    }
-}
 ```
