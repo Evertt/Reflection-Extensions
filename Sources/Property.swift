@@ -1,60 +1,48 @@
-public enum Property {
-    case normal(NormalProperty)
-    case lazy(LazyProperty)
-    
-    init(key: String, value: Any) {
-        if key.matches(regex: "^.+\\.storage$"),
-        let lazyValue = value as? OptionalType {
-            self = .lazy(.init(lazyValue))
-        } else {
-            self = .normal(.init(value))
-        }
-    }
-}
+@testable import Reflection
 
-extension Property {
-    public var isLazy: Bool {
-        switch self {
-        case .lazy:
-            return true
-        case .normal:
-            return false
-        }
+public struct Property {
+    public let key: String
+    public let value: Any?
+    public let type: Any.Type
+    public let realKey: String
+    
+    public let isLazy        : Bool
+    public let isEnum        : Bool
+    public let isTuple       : Bool
+    public let isClass       : Bool
+    public let isStruct      : Bool
+    public let isFunction    : Bool
+    public let isOptional    : Bool
+    public let isInitialized : Bool
+    
+    init(key: String, value: Any, type: Any.Type) {
+        let propertyType = PropertyType(key: key, type: type)
+        self.init(value: value, propertyType: propertyType)
     }
     
-    public var isOptional: Bool {
-        switch self {
-        case let .lazy(property):
-            return property.isOptional
-        case let .normal(property):
-            return property.isOptional
-        }
-    }
-    
-    public var isInitialized: Bool {
-        switch self {
-        case let .lazy(property):
-            return property.isInitialized
-        case .normal:
-            return true
-        }
-    }
-    
-    public var value: Any? {
-        switch self {
-        case let .normal(normal):
-            return normal.value
-        case let .lazy(lazy):
-            return lazy.value
-        }
-    }
-    
-    public var type: Any.Type {
-        switch self {
-        case let .normal(normal):
-            return normal.type
-        case let .lazy(lazy):
-            return lazy.type
+    init(value: Any, propertyType: PropertyType) {
+        key        = propertyType.key
+        type       = propertyType.type
+        isLazy     = propertyType.isLazy
+        isEnum     = propertyType.isEnum
+        isTuple    = propertyType.isTuple
+        realKey    = propertyType.realKey
+        isClass    = propertyType.isClass
+        isStruct   = propertyType.isStruct
+        isFunction = propertyType.isFunction
+        isOptional = propertyType.isOptional
+        
+        if isLazy {
+            if let value = unwrap(value) {
+                isInitialized = true
+                self.value = unwrap(value)
+            } else {
+                self.value = nil
+                isInitialized = false
+            }
+        } else {
+            isInitialized = true
+            self.value = unwrap(value)
         }
     }
 }

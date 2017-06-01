@@ -4,14 +4,13 @@ import Reflection
 
 public func properties(_ instance: Any) -> [String:Property] {
     let mirror = Mirror(reflecting: instance)
+    let types: [String:PropertyType] = properties(type(of: instance))
     
     return Dictionary(mirror.children.flatMap { key, value in
-        guard var key = key else { return nil }
-        let property = Property(key: key, value: value)
-
-        key = key.replacing(pattern: "^(.+?)(\\.storage)?$", with: "$1")
+        guard let key = key, let propertyType = types[key] else { return nil }
+        let property = Property(value: value, propertyType: propertyType)
         
-        return (key, property)
+        return (property.key, property)
     })
 }
 

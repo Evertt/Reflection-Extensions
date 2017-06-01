@@ -1,4 +1,11 @@
 import Foundation
+@testable import Reflection
+
+protocol Collection {}
+
+extension Array: Collection {}
+extension Dictionary: Collection {}
+extension Set: Collection {}
 
 extension Dictionary {
     init(_ array: [Element]) {
@@ -28,6 +35,30 @@ extension Optional: OptionalType {
     static var wrappedType: Any.Type {
         return Wrapped.self
     }
+}
+
+func unwrap(_ value: Any) -> Any? {
+    if let optional = value as? OptionalType {
+        return optional.asOptional
+    }
+    
+    return value
+}
+
+func unwrapOptional(_ type: Any.Type) -> (Bool, Any.Type) {
+    if let optionalType = type as? OptionalType.Type {
+        return (true, optionalType.wrappedType)
+    }
+    
+    return (false, type)
+}
+
+func kind(_ type: Any.Type, is kind: Metadata.Kind) -> Bool {
+    guard let actualKind = Metadata(type: type)?.kind else {
+        return false
+    }
+    
+    return kind == actualKind
 }
 
 extension String {
