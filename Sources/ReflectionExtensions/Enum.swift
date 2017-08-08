@@ -1,3 +1,5 @@
+@testable import Reflection
+
 extension Metadata {
     struct Enum : NominalType {
         static let kind: Kind? = .enum

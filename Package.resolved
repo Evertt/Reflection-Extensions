@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Reflection",
+        "repositoryURL": "https://github.com/Evertt/Reflection.git",
+        "state": {
+          "branch": "4.0",
+          "revision": "553f47a34b1e29423b4542483a1cba2d463e9077",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
