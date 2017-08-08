@@ -5,13 +5,13 @@ public struct PropertyType {
     public let type: Any.Type
     public let realKey: String
     
-    public let isLazy: Bool
-    public let isEnum: Bool
-    public let isTuple: Bool
-    public let isClass: Bool
-    public let isStruct: Bool
-    public let isFunction: Bool
-    public let isOptional: Bool
+    public let isLazy     : Bool
+    public let isEnum     : Bool
+    public let isTuple    : Bool
+    public let isClass    : Bool
+    public let isStruct   : Bool
+    public let isFunction : Bool
+    public let isOptional : Bool
     
     init(key: String, type: Any.Type) {
         realKey = key

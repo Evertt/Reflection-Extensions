@@ -3,9 +3,9 @@ import Foundation
 
 protocol Collection {}
 
-extension Array: Collection {}
-extension Dictionary: Collection {}
-extension Set: Collection {}
+extension Set        : Collection {}
+extension Array      : Collection {}
+extension Dictionary : Collection {}
 
 extension Dictionary {
     init(_ array: [Element]) {

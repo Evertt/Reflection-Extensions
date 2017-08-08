@@ -1,4 +1,4 @@
-import Reflection
+@testable import Reflection
 @_exported import func Reflection.set
 @_exported import func Reflection.construct
 
@@ -35,4 +35,12 @@ public func get(_ key: String, from instance: Any) -> Property? {
 
 public func get(_ key: String, from type: Any.Type) -> PropertyType? {
     return properties(type)[key]
+}
+
+public func listAllCases(of enumType: Any.Type) -> [String] {
+    guard let enumType = Metadata.Enum(type: enumType) else {
+        return []
+    }
+    
+    return enumType.nominalTypeDescriptor.fieldNames
 }
